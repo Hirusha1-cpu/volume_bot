@@ -1,7 +1,6 @@
 import { bs58 } from "@project-serum/anchor/dist/cjs/utils/bytes";
 import { Keypair, LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { Scenes } from "telegraf";
-import { message } from "telegraf/filters";
 
 import { ScenesEnum, connection } from "../const";
 import { getConfig, getMainPrivateKey, setExpiry } from "../db";
@@ -66,6 +65,10 @@ volumeGenerationScene.enter(async (ctx) => {
         base58EncodedPrivateKeyToBase58EncodedPublicKey(privateKey)
       );
 
+      if (tokenBalance < 0) {
+        continue;
+      }
+
       const sellTxHash = await swap(
         connection,
         Keypair.fromSecretKey(bs58.decode(privateKey)),
@@ -80,7 +83,7 @@ volumeGenerationScene.enter(async (ctx) => {
       await ctx.reply(`https://solscan.io/tx/${sellTxHash}`);
       await waitSeconds(delay);
     } catch (error: any) {
-      await ctx.reply(`Transfer failed ${error.message}`);
+      // await ctx.reply(`Transfer failed ${error.message}`);
       await waitSeconds(DEFAULT_WAIT_SECONDS);
     }
   }

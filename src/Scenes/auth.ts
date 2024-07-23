@@ -1,8 +1,7 @@
-import { Markup, Scenes } from "telegraf";
-import { message } from "telegraf/filters";
+import { Scenes } from "telegraf";
 
-import { CommandEnum, CommonEnum, ScenesEnum } from "../const";
-import { getExpiry, setTCStatus } from "../db";
+import { ScenesEnum } from "../const";
+import { getExpiry } from "../db";
 import { WalletBotContext } from "../Interfaces";
 
 // Start scene
@@ -14,16 +13,6 @@ authScene.enter(async (ctx) => {
   if (await getExpiry(userId)) {
     ctx.reply("Expired");
   } else {
-    ctx.scene.enter(ScenesEnum.TERMS_AND_CONDITIONS_SCENE);
+    ctx.scene.enter(ScenesEnum.GENERATE_MAIN_WALLET_SCENE);
   }
 });
-
-// authScene.on(message("text"), (ctx) =>
-//   // query website db
-
-//   // check validity of token
-//   // if token correct move foward
-
-//   // ctx.scene.enter(ScenesEnum.TERMS_AND_CONDITIONS_SCENE)
-
-// );

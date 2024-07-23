@@ -1,7 +1,7 @@
 import { Scenes } from "telegraf";
 import { message } from "telegraf/filters";
 
-import { ConfigFunctionsEnum, ScenesEnum } from "../const";
+import { ScenesEnum } from "../const";
 import { setConfig } from "../db";
 import { WalletBotContext } from "../Interfaces";
 

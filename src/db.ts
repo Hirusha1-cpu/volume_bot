@@ -8,54 +8,6 @@ client.connect().catch((error) => logger.error(error));
 const db = client.db(DB_NAME);
 export const usersCollection = db.collection(COLLECTION_NAME);
 
-export async function setTCStatus(status: boolean, userId: number) {
-  try {
-    await usersCollection.updateOne(
-      { userId },
-      { $set: { tcStatus: status } },
-      { upsert: true }
-    );
-  } catch (error) {
-    logger.error(error as string);
-  }
-}
-
-export async function setPPStatus(status: boolean, userId: number) {
-  try {
-    await usersCollection.updateOne(
-      { userId },
-      { $set: { ppStatus: status } },
-      { upsert: true }
-    );
-  } catch (error) {
-    logger.error(error as string);
-  }
-}
-
-export async function getTCStatus(userId: number) {
-  try {
-    const user = await usersCollection.findOne({ userId });
-    if (!user) {
-      return false;
-    }
-    return user.tcStatus;
-  } catch (error) {
-    logger.error(error as string);
-  }
-}
-
-export async function getPPStatus(userId: number) {
-  try {
-    const user = await usersCollection.findOne({ userId });
-    if (!user) {
-      return false;
-    }
-    return user.ppStatus;
-  } catch (error) {
-    logger.error(error as string);
-  }
-}
-
 export async function setMainPrivateKey(
   mainPrivateKey: string,
   userId: number

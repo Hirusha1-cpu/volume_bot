@@ -32,7 +32,7 @@ export const generateMainWalletScene = new Scenes.BaseScene<WalletBotContext>(
 );
 
 generateMainWalletScene.start((ctx) => {
-  ctx.scene.enter(ScenesEnum.TERMS_AND_CONDITIONS_SCENE);
+  ctx.scene.enter(ScenesEnum.AUTH_SCENE);
 });
 
 generateMainWalletScene.enter(async (ctx) => {

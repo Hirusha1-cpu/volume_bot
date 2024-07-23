@@ -5,7 +5,6 @@ import { MainFunctionsEnum, ScenesEnum, connection } from "../const";
 import { getConfig, getMainPrivateKey } from "../db";
 import { WalletBotContext } from "../Interfaces";
 import { getSolBalance, transferSOL } from "../lib";
-import { waitSeconds } from "../lib";
 import { base58EncodedPrivateKeyToBase58EncodedPublicKey } from "../lib/accounts";
 
 let isStopped = false;

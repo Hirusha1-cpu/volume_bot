@@ -13,8 +13,6 @@ import { maxSwapDelayScene } from "./Scenes/maxSwapDelayScene";
 import { minSwapAmountScene } from "./Scenes/minSwapAmountScene";
 import { minSwapDelayScene } from "./Scenes/minSwapDelayScene";
 import { priorityFeeScene } from "./Scenes/priorityFeeScene";
-import { privacyPolicyScene } from "./Scenes/privacyScene";
-import { termsAndConditionsScene } from "./Scenes/tcScene";
 import { tokenScene } from "./Scenes/tokenScene";
 import { transferFundsScene } from "./Scenes/transferFundsScene";
 import { volumeGenerationScene } from "./Scenes/volumeGenerationScene";
@@ -22,8 +20,6 @@ import { volumeGenerationScene } from "./Scenes/volumeGenerationScene";
 const bot = new Telegraf<WalletBotContext>(BOT_TOKEN);
 
 const stage = new Scenes.Stage<WalletBotContext>([
-  termsAndConditionsScene,
-  privacyPolicyScene,
   generateMainWalletScene,
   mainScene,
   configScene,

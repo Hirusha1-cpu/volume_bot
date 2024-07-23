@@ -14,8 +14,6 @@ export const logger = new Logger();
 
 export enum ScenesEnum {
   AUTH_SCENE = "AUTH_SCENE",
-  TERMS_AND_CONDITIONS_SCENE = "TERMS_AND_CONDITIONS_SCENE",
-  PRIVACY_POLICY_SCENE = "PRIVACY_POLICY_SCENE",
   GENERATE_MAIN_WALLET_SCENE = "GENERATE_WALLET_SCENE",
   MAIN_SCENE = "MAIN_SCENE",
   CONFIG_SCENE = "CONFIG_SCENE",
@@ -66,9 +64,6 @@ export enum ConfigFunctionsEnum {
 }
 
 export const derivationPath = "m/44'/501'/0'/0'";
-
-// export const TRANSFER_FEE = transferFeeInSOL * LAMPORTS_PER_SOL;
-// export const MAX_PRIORITY_FEE = maxPriorityFeeInSol * LAMPORTS_PER_SOL;
 
 export const rpcUrl = process.env.RPC_URL as string;
 
