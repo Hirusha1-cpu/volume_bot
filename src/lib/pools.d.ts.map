@@ -1,0 +1,1 @@
+{"version":3,"file":"pools.d.ts","sourceRoot":"","sources":["../src/pools.ts"],"names":[],"mappings":"AAAA,OAAO,EAEL,mBAAmB,EAGpB,MAAM,yBAAyB,CAAC;AACjC,OAAO,EAAE,UAAU,EAAE,UAAU,EAAa,MAAM,iBAAiB,CAAC;AAIpE,wBAAsB,aAAa,CACjC,UAAU,EAAE,UAAU,EACtB,aAAa,EAAE,MAAM,EACrB,aAAa,EAAE,MAAM,EACrB,UAAU,GAAE,UAAwB,GACnC,OAAO,CAAC,mBAAmB,EAAE,CAAC,CAqGhC"}
