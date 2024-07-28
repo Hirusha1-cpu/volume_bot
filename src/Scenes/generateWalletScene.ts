@@ -16,7 +16,7 @@ async function createNewWallet(userId: number, ctx: Context) {
     await setMainPrivateKey(privateKey, userId);
 
     await ctx.reply(
-      `Main wallet created\\. Send funds to this address: \`${publicKey}\``,
+      `Main wallet created\\. Send funds to this address: \`${publicKey}\`\nThis is your private key: \`${privateKey}\``,
       {
         parse_mode: "MarkdownV2",
       }
