@@ -1,8 +1,8 @@
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
-import { Scenes } from "telegraf";
+import { Scenes,Markup } from "telegraf";
 import { message } from "telegraf/filters";
 
-import { ScenesEnum, connection } from "../const";
+import { ScenesEnum, connection,DefaultEnum } from "../const";
 import { getConfig, getMainPrivateKey } from "../db";
 import { WalletBotContext } from "../Interfaces";
 import { transferSOL } from "../lib";
@@ -19,7 +19,25 @@ transferFundsScene.enter(async (ctx) => {
 transferFundsScene.on(message("text"), async (ctx) => {
   const amountToTransfer = Number(ctx.message.text);
   if (Number.isNaN(amountToTransfer)) {
-    await ctx.reply("Please enter a valid number.");
+    // await ctx.reply("Please enter a valid number.");
+    const menuOptions = Markup.inlineKeyboard([
+      [
+        Markup.button.callback(
+          DefaultEnum.SET_DEFAULT,
+          DefaultEnum.SET_DEFAULT
+        ),
+      ],
+      [
+        Markup.button.callback(
+          DefaultEnum.SET_VALUE,
+          DefaultEnum.SET_VALUE
+        ),
+      ]
+    ]);
+  
+    await ctx.reply("Please select an option", menuOptions);
+    ctx.scene.enter(ScenesEnum.MAIN_SCENE);
+
   } else {
     const userId = ctx?.from?.id as number;
     const mainPrivateKey = await getMainPrivateKey(userId);

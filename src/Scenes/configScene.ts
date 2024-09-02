@@ -14,26 +14,30 @@ configScene.enter(async (ctx) => {
         ConfigFunctionsEnum.SET_TOKEN,
         ConfigFunctionsEnum.SET_TOKEN
       ),
+    ],
+    [
       Markup.button.callback(
         ConfigFunctionsEnum.SET_SWAP_AMOUNT,
         ConfigFunctionsEnum.SET_SWAP_AMOUNT
       ),
+    ],
+    [
       Markup.button.callback(
         ConfigFunctionsEnum.SET_DELAY,
         ConfigFunctionsEnum.SET_DELAY
       ),
-    ],
-    [
       Markup.button.callback(
         ConfigFunctionsEnum.SET_PRIORITY_FEE,
         ConfigFunctionsEnum.SET_PRIORITY_FEE
       ),
+    ],
+    [
       Markup.button.callback(
         ConfigFunctionsEnum.SET_MIN_MAINTENANCE_BALANCE,
         ConfigFunctionsEnum.SET_MIN_MAINTENANCE_BALANCE
       ),
-      Markup.button.callback(CommonEnum.BACK, CommonEnum.BACK),
     ],
+    [Markup.button.callback(CommonEnum.BACK, CommonEnum.BACK)],
   ]);
   ctx.reply("Please select an option", menuOptions);
 });

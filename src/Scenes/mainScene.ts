@@ -13,37 +13,70 @@ let isStopped = false;
 export const mainScene = new Scenes.BaseScene<WalletBotContext>(
   ScenesEnum.MAIN_SCENE
 );
-
 mainScene.enter(async (ctx) => {
   const menuOptions = Markup.inlineKeyboard([
     [
       Markup.button.callback(
         MainFunctionsEnum.SET_CONFIG,
         MainFunctionsEnum.SET_CONFIG
-      ),
+      )
+    ],[
       Markup.button.callback(
         MainFunctionsEnum.CREATE_WALLETS,
         MainFunctionsEnum.CREATE_WALLETS
-      ),
+      )
+    ],[
       Markup.button.callback(
         MainFunctionsEnum.TRANSFER,
         MainFunctionsEnum.TRANSFER
-      ),
-    ],
-    [
+      )
+    ],[
       Markup.button.callback(MainFunctionsEnum.START, MainFunctionsEnum.START),
       Markup.button.callback(
         MainFunctionsEnum.GET_BALANCE,
         MainFunctionsEnum.GET_BALANCE
-      ),
+      )
+    ],[
       Markup.button.callback(
         MainFunctionsEnum.TRANSFER_BACK,
         MainFunctionsEnum.TRANSFER_BACK
-      ),
-    ],
+      )
+    ]
+ 
   ]);
+
   ctx.reply("Please select an option", menuOptions);
 });
+// mainScene.enter(async (ctx) => {
+//   const menuOptions = Markup.inlineKeyboard([
+//     [
+//       Markup.button.callback(
+//         MainFunctionsEnum.SET_CONFIG,
+//         MainFunctionsEnum.SET_CONFIG
+//       ),
+//       Markup.button.callback(
+//         MainFunctionsEnum.CREATE_WALLETS,
+//         MainFunctionsEnum.CREATE_WALLETS
+//       ),
+//       Markup.button.callback(
+//         MainFunctionsEnum.TRANSFER,
+//         MainFunctionsEnum.TRANSFER
+//       ),
+//     ],
+//     [
+//       Markup.button.callback(MainFunctionsEnum.START, MainFunctionsEnum.START),
+//       Markup.button.callback(
+//         MainFunctionsEnum.GET_BALANCE,
+//         MainFunctionsEnum.GET_BALANCE
+//       ),
+//       Markup.button.callback(
+//         MainFunctionsEnum.TRANSFER_BACK,
+//         MainFunctionsEnum.TRANSFER_BACK
+//       ),
+//     ],
+//   ]);
+//   ctx.reply("Please select an option", menuOptions);
+// });
 
 mainScene.action(MainFunctionsEnum.SET_CONFIG, async (ctx) => {
   ctx.scene.enter(ScenesEnum.CONFIG_SCENE);

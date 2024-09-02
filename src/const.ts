@@ -10,6 +10,9 @@ export const MONGO_DB_URI = process.env.MONGO_DB_URI as string;
 export const DB_NAME = process.env.DB_NAME as string;
 export const COLLECTION_NAME = process.env.COLLECTION_NAME as string;
 
+export const DB_NAME_USER_TOKEN = process.env.DB_NAME_USER_TOKEN as string;
+export const COLLECTION_NAME_USER_TOKEN = process.env.COLLECTION_NAME_USER_TOKEN as string;
+
 export const logger = new Logger();
 
 export enum ScenesEnum {
@@ -46,21 +49,30 @@ export enum CommonEnum {
 }
 
 export enum MainFunctionsEnum {
-  SET_CONFIG = "Set Config",
-  CREATE_WALLETS = "Create Walletes",
-  TRANSFER = "Transfer",
-  START = "Start",
-  GET_BALANCE = "Get Balance",
-  TRANSFER_BACK = "Transfe Funds Back",
-  STOP = "STOP",
+  SET_CONFIG = "🎖 Set Config",
+  CREATE_WALLETS = "💼 Create Walletes",
+  TRANSFER = "💸 Transfer",
+  START = "🚀 Start",
+  GET_BALANCE = "💰 Get Balance",
+  TRANSFER_BACK = "💵 Transfe Funds Back",
+  STOP = "⏹️ STOP",
 }
 
 export enum ConfigFunctionsEnum {
-  SET_TOKEN = "Set Token",
-  SET_SWAP_AMOUNT = "Set Swap Amount",
-  SET_DELAY = "Set Delay",
-  SET_PRIORITY_FEE = "Set Priority Fee",
-  SET_MIN_MAINTENANCE_BALANCE = "Set Minimum Maintenance Balance",
+  SET_TOKEN = "📜 Set Token",
+  SET_SWAP_AMOUNT = "💶 Set Swap Amount",
+  SET_DELAY = "⏳ Set Delay",
+  SET_PRIORITY_FEE = "💵 Set Priority Fee",
+  SET_MIN_MAINTENANCE_BALANCE = "💰 Set Minimum Maintenance Balance",
+}
+export enum ContactUsEnum {
+  SET_TOKEN = "📜 Set Token",
+  SET_CONTACT_US = "☎️ Contact Us",
+}
+
+export enum DefaultEnum {
+  SET_DEFAULT = "🧮 Set Default",
+  SET_VALUE = "📝 Set Value",
 }
 
 export const derivationPath = "m/44'/501'/0'/0'";

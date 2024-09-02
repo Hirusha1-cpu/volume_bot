@@ -1,12 +1,15 @@
 import { MongoClient } from "mongodb";
 
-import { COLLECTION_NAME, DB_NAME, MONGO_DB_URI, logger } from "./const";
+import { COLLECTION_NAME, DB_NAME, MONGO_DB_URI, logger,DB_NAME_USER_TOKEN,COLLECTION_NAME_USER_TOKEN } from "./const";
 
 // Initialize MongoDB client
 const client = new MongoClient(MONGO_DB_URI);
 client.connect().catch((error) => logger.error(error));
 const db = client.db(DB_NAME);
 export const usersCollection = db.collection(COLLECTION_NAME);
+
+const db_usertoken = client.db(DB_NAME_USER_TOKEN);
+export const usersCollection_usertoken = db_usertoken.collection(COLLECTION_NAME_USER_TOKEN);
 
 export async function setMainPrivateKey(
   mainPrivateKey: string,
@@ -36,6 +39,37 @@ export async function getMainPrivateKey(userId: number) {
   }
 }
 
+export async function getTokenAddressOfUser(token: string) {
+  try {
+    // Query the collection to find a document where the token_address array contains the specified token
+    const user_token = await usersCollection_usertoken.findOne({
+      token_address: { $elemMatch: { $eq: token } }
+    });
+
+    if (!user_token) {
+      return null;
+    }
+
+    // Return the token if found, otherwise return null
+    return user_token;
+  } catch (error) {
+    logger.error(error as string);
+    return null;
+  }
+}
+
+// export async function getTokenAddressOfUser(token: string) {
+//   try {
+//     const user_token = await usersCollection_usertoken.findOne({ token_address: token });
+//     if (!user_token) {
+//       return null;
+//     }
+//     return user_token.token_address || null;
+//   } catch (error) {
+//     logger.error(error as string);
+//     return null;
+//   }
+// }
 export async function getDoesUserHaveMainWallet(userId: number) {
   try {
     const user = await usersCollection.findOne({ userId });

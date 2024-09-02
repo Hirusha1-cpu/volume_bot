@@ -1,7 +1,7 @@
-import { Scenes } from "telegraf";
+import { Scenes , Markup} from "telegraf";
 import { message } from "telegraf/filters";
 
-import { ScenesEnum } from "../const";
+import { ScenesEnum, DefaultEnum } from "../const";
 import { setConfig } from "../db";
 import { WalletBotContext } from "../Interfaces";
 
@@ -12,13 +12,30 @@ export const minSwapDelayScene = new Scenes.BaseScene<WalletBotContext>(
 
 minSwapDelayScene.enter(async (ctx) => {
   ctx.reply("Set mimimum seconds of delay between swaps.");
+
 });
 
 minSwapDelayScene.on(message("text"), async (ctx) => {
   const minSwapDelay = Number(ctx.message.text);
   const userId = ctx?.from?.id as number;
   if (Number.isNaN(minSwapDelay)) {
-    await ctx.reply("Please enter a valid number.");
+    // await ctx.reply("Please enter a valid number.");
+    const menuOptions = Markup.inlineKeyboard([
+      [
+        Markup.button.callback(
+          DefaultEnum.SET_DEFAULT,
+          DefaultEnum.SET_DEFAULT
+        ),
+      ],
+      [
+        Markup.button.callback(
+          DefaultEnum.SET_VALUE,
+          DefaultEnum.SET_VALUE
+        ),
+      ]
+    ]);
+  
+    await ctx.reply("Please select an option", menuOptions);
   } else {
     await setConfig({ minSwapDelay }, userId);
 
