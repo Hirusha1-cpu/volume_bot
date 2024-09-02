@@ -38,9 +38,27 @@ maintenaceBalanceScene.on(message("text"), async (ctx) => {
     ]);
   
     await ctx.reply("Please select an option", menuOptions);
+    ctx.scene.enter(ScenesEnum.CONFIG_SCENE);
+
   } else {
     await setConfig({ maintenanceBalance }, userId);
     await ctx.reply(`Set priority fee to ${maintenanceBalance}.`);
     ctx.scene.enter(ScenesEnum.CONFIG_SCENE);
   }
+});
+
+maintenaceBalanceScene.action(DefaultEnum.SET_DEFAULT, async (ctx) => {
+  const userId = ctx?.from?.id as number;
+  const defaultMinSwapAmount = 0.001;
+
+  // Set the default minSwapAmount value
+  await setConfig({ maintenanceBalance: defaultMinSwapAmount }, userId);
+  await ctx.reply(`Set maintenance balance to the default value of ${defaultMinSwapAmount}.`);
+
+  // Proceed to the next scene
+  ctx.scene.enter(ScenesEnum.SET_MAINTENANCE_BALANCE_SCENE);
+});
+
+maintenaceBalanceScene.action(DefaultEnum.SET_VALUE, async (ctx) => {
+  await ctx.reply("Set maintenance balance.");
 });

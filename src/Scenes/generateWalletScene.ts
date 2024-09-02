@@ -16,7 +16,7 @@ async function createNewWallet(userId: number, ctx: Context) {
     await setMainPrivateKey(privateKey, userId);
 
     await ctx.reply(
-      `🎖️ Main wallet created\\. Send funds to this address ➡️ \`${publicKey}\`\n ✨ This is your private key ➡️ \`${privateKey}\``,
+      `👋 Welcome to the Solana Telegram Bot\\! \n\n🎖️ Main wallet created\\.\n\n 👜 Send funds to this address ➡️ \n\`${publicKey}\`\n\n ✨ This is your private key ➡️ \n\`${privateKey}\``,
       {
         parse_mode: "MarkdownV2",
       }

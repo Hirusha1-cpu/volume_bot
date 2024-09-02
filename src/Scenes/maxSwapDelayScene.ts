@@ -36,9 +36,26 @@ maxSwapDelayScene.on(message("text"), async (ctx) => {
     ]);
   
     await ctx.reply("Please select an option", menuOptions);
+
   } else {
     await setConfig({ maxSwapDelay }, userId);
     await ctx.reply(`Set maximum delay between swaps to ${maxSwapDelay}.`);
     ctx.scene.enter(ScenesEnum.CONFIG_SCENE);
   }
+});
+
+maxSwapDelayScene.action(DefaultEnum.SET_DEFAULT, async (ctx) => {
+  const userId = ctx?.from?.id as number;
+  const defaultMinSwapAmount = 20;
+
+  // Set the default minSwapAmount value
+  await setConfig({ maxSwapDelay: defaultMinSwapAmount }, userId);
+  await ctx.reply(`Set minimum swap amount to the default value of ${defaultMinSwapAmount}.`);
+
+  // Proceed to the next scene
+  ctx.scene.enter(ScenesEnum.SET_MAX_DELAY_SCENE);
+});
+
+maxSwapDelayScene.action(DefaultEnum.SET_VALUE, async (ctx) => {
+  await ctx.reply("Set max swap delay.");
 });

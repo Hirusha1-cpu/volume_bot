@@ -52,6 +52,8 @@ tokenScene.on(message("text"), async (ctx) => {
       ]);
 
       await ctx.reply("Please select an option", menuOptions);
+      ctx.scene.enter(ScenesEnum.CONFIG_SCENE);
+
       // await setConfig({ token }, userId);
       // await ctx.reply(`Set token to ${token}.`);
       // ctx.scene.enter(ScenesEnum.CONFIG_SCENE);

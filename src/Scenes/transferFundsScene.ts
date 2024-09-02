@@ -36,7 +36,6 @@ transferFundsScene.on(message("text"), async (ctx) => {
     ]);
   
     await ctx.reply("Please select an option", menuOptions);
-    ctx.scene.enter(ScenesEnum.MAIN_SCENE);
 
   } else {
     const userId = ctx?.from?.id as number;
@@ -63,4 +62,32 @@ transferFundsScene.on(message("text"), async (ctx) => {
 
     ctx.scene.enter(ScenesEnum.MAIN_SCENE);
   }
+});
+
+transferFundsScene.action(DefaultEnum.SET_DEFAULT, async (ctx) => {
+  const userId = ctx?.from?.id as number;
+  const mainPrivateKey = await getMainPrivateKey(userId);
+  const amountToTransfer = Number(0.02);
+
+  const {
+    subWallets: { base58EncodedPublicKeys },
+    priorityFee,
+  } = await getConfig(userId);
+  for (const publicKey of base58EncodedPublicKeys) {
+    try {
+      const txHash = await transferSOL(
+        connection,
+        amountToTransfer,
+        mainPrivateKey,
+        publicKey,
+        priorityFee * LAMPORTS_PER_SOL
+      );
+
+      await ctx.reply(`https://solscan.io/tx/${txHash}`);
+    } catch (error: any) {
+      await ctx.reply(`Transfer failed ${error.message}`);
+    }
+  }
+
+  ctx.scene.enter(ScenesEnum.MAIN_SCENE);
 });
