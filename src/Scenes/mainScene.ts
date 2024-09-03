@@ -1,6 +1,5 @@
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { Markup, Scenes } from "telegraf";
-
 import { MainFunctionsEnum, ScenesEnum, connection } from "../const";
 import { getConfig, getMainPrivateKey } from "../db";
 import { WalletBotContext } from "../Interfaces";
@@ -41,11 +40,32 @@ mainScene.enter(async (ctx) => {
         MainFunctionsEnum.TRANSFER_BACK,
         MainFunctionsEnum.TRANSFER_BACK
       )
+    ],
+    [
+      
+        Markup.button.callback(
+          MainFunctionsEnum.REFRESH,
+          MainFunctionsEnum.REFRESH
+        )
+      ,
+        Markup.button.callback(
+          MainFunctionsEnum.HELP,
+          MainFunctionsEnum.HELP
+        )
+      
+    ],
+    [
+      Markup.button.callback(
+        MainFunctionsEnum.STOP,
+        MainFunctionsEnum.STOP
+      )
     ]
+
  
   ]);
 
   ctx.reply("Please select an option", menuOptions);
+
 });
 // mainScene.enter(async (ctx) => {
 //   const menuOptions = Markup.inlineKeyboard([
@@ -92,6 +112,10 @@ mainScene.action(MainFunctionsEnum.TRANSFER, async (ctx) => {
 
 mainScene.action(MainFunctionsEnum.START, async (ctx) => {
   ctx.scene.enter(ScenesEnum.VOLUME_GENERATION_PROGRESS);
+});
+
+mainScene.action(MainFunctionsEnum.HELP, async (ctx) => {
+  await ctx.scene.enter(ScenesEnum.HELP_SCENE);
 });
 
 mainScene.action(MainFunctionsEnum.GET_BALANCE, async (ctx) => {
@@ -150,3 +174,14 @@ mainScene.action(MainFunctionsEnum.TRANSFER_BACK, async (ctx) => {
   isStopped = true;
   console.log("Here");
 });
+
+mainScene.action(MainFunctionsEnum.REFRESH, async (ctx) => {
+  await ctx.reply("Refreshing...");
+  ctx.scene.reenter(); // Re-enter the current scene to refresh it
+});
+
+mainScene.action(MainFunctionsEnum.STOP, async (ctx) => {
+  isStopped = true;
+  console.log("Here");
+});
+

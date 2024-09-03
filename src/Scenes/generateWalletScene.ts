@@ -1,5 +1,6 @@
 import { Context, Markup, Scenes } from "telegraf";
 import { message } from "telegraf/filters";
+import { Connection, PublicKey } from "@solana/web3.js"; // Import necessary Solana packages
 
 import { CommandEnum, CommonEnum, ScenesEnum, logger } from "../const";
 import { getDoesUserHaveMainWallet, setMainPrivateKey } from "../db";
@@ -15,6 +16,17 @@ async function createNewWallet(userId: number, ctx: Context) {
 
     await setMainPrivateKey(privateKey, userId);
 
+     // Set up a connection to the Solana blockchain (using the devnet as an example)
+     const connection = new Connection("https://api.devnet.solana.com", "confirmed");
+
+     // Convert the public key string into a PublicKey object
+     const walletPublicKey = new PublicKey(publicKey);
+ 
+     // Fetch the balance of the wallet
+     const balance = await connection.getBalance(walletPublicKey);
+     const balanceInSOL = balance / 1e9; // Convert lamports to SOL
+     console.log(balanceInSOL);
+     
     // await ctx.reply(
     //   `👋 Welcome to the Solana Telegram Bot\\! \n\n🎖️ Main wallet created\\.\n\n 👜 Send funds to this address ➡️ \n\`${publicKey}\`\n\n ✨ This is your private key ➡️ \n\`${privateKey}\` \n\n 💸 Balance: 0 SOL`,
     //   // `<size=16>👋 Welcome to the Solana Telegram Bot!</size>\n\n**🎖️ Main wallet created.**\n\n**👜 Send funds to this address ➡️**\n\`${publicKey}\`\n\n**✨ This is your private key ➡️**\n\`${privateKey}\`\n\n**💸 Balance: 0 SOL**`,
@@ -28,7 +40,7 @@ async function createNewWallet(userId: number, ctx: Context) {
       🎖️ <b>Main wallet created.</b>\n\n
       👜 <b>Send funds to this address</b> ➡️ <code>${publicKey}</code>\n\n
       ✨ <b>This is your private key</b> ➡️ <code>${privateKey}</code>\n\n
-      💸 Balance: 0 SOL`
+      💸 Balance: ${balanceInSOL} SOL`
     );
   } catch (error) {
     logger.error(error as string);

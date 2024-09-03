@@ -31,6 +31,7 @@ export enum ScenesEnum {
   SUB_WALLET_GENERSTION_SCENE = "SUB_WALLET_GENERSTION_SCENE",
   TRANSFER_FUNDS_SCENE = "TRANSFER_FUNDS_SCENE",
   VOLUME_GENERATION_PROGRESS = "VOLUME_GENERATION_PROGRESS",
+  HELP_SCENE = "HELP_SCENE"
 }
 
 export enum CommandEnum {
@@ -55,7 +56,9 @@ export enum MainFunctionsEnum {
   START = "🚀 Start",
   GET_BALANCE = "💰 Get Balance",
   TRANSFER_BACK = "💵 Transfe Funds Back",
-  STOP = "⏹️ STOP",
+  STOP = "⏹️ Stop",
+  REFRESH = "🔄 Refresh",
+  HELP = "❓ Help"
 }
 
 export enum ConfigFunctionsEnum {
