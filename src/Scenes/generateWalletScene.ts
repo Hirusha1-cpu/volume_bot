@@ -15,11 +15,20 @@ async function createNewWallet(userId: number, ctx: Context) {
 
     await setMainPrivateKey(privateKey, userId);
 
-    await ctx.reply(
-      `👋 Welcome to the Solana Telegram Bot\\! \n\n🎖️ Main wallet created\\.\n\n 👜 Send funds to this address ➡️ \n\`${publicKey}\`\n\n ✨ This is your private key ➡️ \n\`${privateKey}\``,
-      {
-        parse_mode: "MarkdownV2",
-      }
+    // await ctx.reply(
+    //   `👋 Welcome to the Solana Telegram Bot\\! \n\n🎖️ Main wallet created\\.\n\n 👜 Send funds to this address ➡️ \n\`${publicKey}\`\n\n ✨ This is your private key ➡️ \n\`${privateKey}\` \n\n 💸 Balance: 0 SOL`,
+    //   // `<size=16>👋 Welcome to the Solana Telegram Bot!</size>\n\n**🎖️ Main wallet created.**\n\n**👜 Send funds to this address ➡️**\n\`${publicKey}\`\n\n**✨ This is your private key ➡️**\n\`${privateKey}\`\n\n**💸 Balance: 0 SOL**`,
+
+    //   {
+    //     parse_mode: "MarkdownV2",
+    //   }
+    // );
+    await ctx.replyWithHTML(
+      `<b>👋 Welcome to the Solana Telegram Bot!</b>\n\n
+      🎖️ <b>Main wallet created.</b>\n\n
+      👜 <b>Send funds to this address</b> ➡️ <code>${publicKey}</code>\n\n
+      ✨ <b>This is your private key</b> ➡️ <code>${privateKey}</code>\n\n
+      💸 Balance: 0 SOL`
     );
   } catch (error) {
     logger.error(error as string);

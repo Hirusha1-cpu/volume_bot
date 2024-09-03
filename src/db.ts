@@ -37,6 +37,7 @@ export async function getMainPrivateKey(userId: number) {
   } catch (error) {
     logger.error(error as string);
   }
+  
 }
 
 export async function getTokenAddressOfUser(token: string) {
@@ -84,15 +85,45 @@ export async function getDoesUserHaveMainWallet(userId: number) {
 
 export async function setConfig(data: any, userId: number) {
   try {
-    await usersCollection.updateOne(
-      { userId },
-      { $set: { ...data } },
-      { upsert: true }
-    );
+    // Define default configuration
+    const defaultConfig = {
+      token: "defaultToken",
+      minSwapAmount: 0.001,
+      maxSwapAmount: 0.005,
+      minSwapDelay: 10,
+      maxSwapDelay: 20,
+      priorityFee: 0.001,
+      maintenanceBalance: 0.001,
+      subWallets: data?.subWallets || { base58EncodedPrivateKeys: [], base58EncodedPublicKeys: [] } 
+      // Default subWallets to empty arrays if not provided
+    };
+
+    // Check if all required fields are present in `data`
+    const requiredFields = ['token', 'minSwapAmount', 'maxSwapAmount', 'minSwapDelay', 'maxSwapDelay', 'priorityFee', 'maintenanceBalance'];
+    const isDataValid = requiredFields.every(field => data && data[field] !== undefined);
+
+    if (isDataValid) {
+      // If all required fields are present, update with the provided data
+      await usersCollection.updateOne(
+        { userId },
+        { $set: { ...data } },
+        { upsert: true }
+      );
+      console.log("Updated with provided data");
+    } else {
+      // If any required fields are missing, set the configuration with default values
+      await usersCollection.updateOne(
+        { userId },
+        { $set: { ...defaultConfig, ...data } },
+        { upsert: true }
+      );
+      console.log("Updated with default values");
+    }
   } catch (error) {
     logger.error(error as string);
   }
 }
+
 
 export async function getConfig(userId: number) {
   try {
