@@ -17,8 +17,8 @@ generateSubWalletsScene.enter(async (ctx) => {
 
 generateSubWalletsScene.on(message("text"), async (ctx) => {
   const defaultValues = {
-    minSwapAmount: 0.001,
-    maxSwapAmount: 0.005,
+    minSwapAmount: 0.00001,
+    maxSwapAmount: 0.00005,
     minSwapDelay: 10,
     maxSwapDelay: 20,
     priorityFee: 0.001,

@@ -229,3 +229,41 @@ mainScene.action(MainFunctionsEnum.STOP, async (ctx) => {
   console.log("Here");
 });
 
+
+mainScene.command('test', async (ctx) => {
+  isStopped = false;
+  ctx.reply("🔄 Loop started. Use /stop to end the loop early.");
+
+  // Set a timer to stop the loop after 1 minute (60,000 milliseconds)
+  setTimeout(() => {
+    isStopped = true;
+    ctx.reply("⏰ 1 minute is up! The loop has been automatically stopped.");
+  }, 60000); // 1 minute = 60,000 milliseconds
+
+  try {
+    while (!isStopped) {
+      // Check if the loop is stopped before doing any work
+      console.log("stop clicked -1");
+      if (isStopped) break;
+      console.log("stop clicked -2");
+      
+      await ctx.reply("🔁 Running loop...");
+      
+      console.log("stop clicked -3");
+      // Delay to control loop frequency
+      await new Promise((resolve) => setTimeout(resolve, 5000)); // 5 seconds delay
+      console.log("stop clicked -4");
+    }
+
+    ctx.reply("✅ Loop has been stopped.");
+  } catch (error: any) {
+    console.log("Loop interrupted:", error.message);
+  }
+});
+
+mainScene.command('stop', async (ctx) => {
+  isStopped = true;
+  ctx.reply("🛑 Loop stopped by user.");
+  console.log("stop clicked");
+  
+});
