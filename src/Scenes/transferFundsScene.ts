@@ -83,7 +83,13 @@ transferFundsScene.action(DefaultEnum.SET_DEFAULT, async (ctx) => {
         priorityFee * LAMPORTS_PER_SOL
       );
 
-      await ctx.reply(`https://solscan.io/tx/${txHash}`);
+      // await ctx.reply(`https://solscan.io/tx/${txHash}`);
+      await ctx.replyWithHTML(
+        `👜 <b>Transaction ${amountToTransfer} Wallet</b>\n\n` +
+        `🔗 <b>Transaction Details</b>\n\n` +
+        `You can view the transaction details at the following link:\n` +
+        `<a href="https://solscan.io/tx/${txHash}">📈 View Transaction on Solscan</a>\n\n`
+      );
     } catch (error: any) {
       await ctx.reply(`Transfer failed ${error.message}`);
     }

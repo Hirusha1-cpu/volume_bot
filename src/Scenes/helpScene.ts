@@ -44,7 +44,7 @@ helpScene.action(DefaultEnum.SET_DEFAULT, async (ctx) => {
 });
 
 helpScene.action(MainFunctionsEnum.REFRESH, async (ctx) => {
-    await ctx.reply("Refreshing...");
+    // await ctx.reply("Refreshing...");
     // Delay to ensure the message is sent
     setTimeout(() => ctx.scene.enter(ScenesEnum.MAIN_SCENE), 500);
 });

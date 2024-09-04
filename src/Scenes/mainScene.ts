@@ -130,7 +130,12 @@ mainScene.action(MainFunctionsEnum.GET_BALANCE, async (ctx) => {
       const balance =
         (await getSolBalance(connection, publicKey)) / LAMPORTS_PER_SOL;
 
-      await ctx.reply(`Balance of ${publicKey} is ${balance} SOL`);
+      // await ctx.reply(`Balance of ${publicKey} is ${balance} SOL`);
+      await ctx.replyWithHTML(
+        `💰 <b>Balance Update</b>\n\n` +
+        `🔑 <b>Wallet Address:</b> <code>${publicKey}</code>\n\n` +
+        `💸 <b>Current Balance:</b> ${balance} SOL`
+      );
     } catch (error: any) {
       await ctx.reply(`Error getting balance of ${publicKey}`);
     }
@@ -162,7 +167,13 @@ mainScene.action(MainFunctionsEnum.TRANSFER_BACK, async (ctx) => {
           base58EncodedPrivateKeyToBase58EncodedPublicKey(mainPrivateKey)
         );
 
-        await ctx.reply(`https://solscan.io/tx/${txHash}`);
+        // await ctx.reply(`https://solscan.io/tx/${txHash}`);
+        await ctx.replyWithHTML(
+          `👜 <b>Transaction Back To Wallet</b>\n\n` +
+          `🔗 <b>Transaction Details</b>\n\n` +
+          `You can view the transaction details at the following link:\n` +
+          `<a href="https://solscan.io/tx/${txHash}">📈 View Transaction on Solscan</a>\n\n`
+        );
       } catch (error: any) {
         await ctx.reply(`Transfer failed ${error.message}`);
       }
@@ -175,10 +186,43 @@ mainScene.action(MainFunctionsEnum.TRANSFER_BACK, async (ctx) => {
   console.log("Here");
 });
 
+// mainScene.action(MainFunctionsEnum.REFRESH, async (ctx) => {
+//   await ctx.reply("Refreshing...");
+//   ctx.scene.reenter(); // Re-enter the current scene to refresh it
+// });
+
 mainScene.action(MainFunctionsEnum.REFRESH, async (ctx) => {
-  await ctx.reply("Refreshing...");
-  ctx.scene.reenter(); // Re-enter the current scene to refresh it
+  await ctx.reply("🔄 Refreshing balances...");
+
+  const userId = ctx?.from?.id as number;
+
+  // Get the user's wallet configuration
+  const {
+    wallets: { publicKey, privateKey },
+  } = await getConfig(userId);
+
+  // Loop through each wallet and get the balance
+  // for (let i = 0; i < base58EncodedPublicKeys.length; i++) {
+
+    try {
+      const balance =
+        (await getSolBalance(connection, publicKey)) / LAMPORTS_PER_SOL;
+
+      // Display the balance with emojis and private key
+      await ctx.replyWithHTML(
+        `👜 <b>Deposit Wallet Address:</b> ➡️<code>${publicKey}</code>\n\n` +
+        `🔑 <b>Deposit Private Key:</b> ➡️<code>${privateKey}</code>\n\n` +
+        `💰 <b>Balance:</b> ${balance} SOL\n`
+      );
+    } catch (error: any) {
+      await ctx.reply(`❗ Error getting balance of ${publicKey}`);
+    }
+  // }
+
+  // Re-enter the current scene to refresh it
+  ctx.scene.reenter();
 });
+
 
 mainScene.action(MainFunctionsEnum.STOP, async (ctx) => {
   isStopped = true;

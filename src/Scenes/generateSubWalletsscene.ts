@@ -49,11 +49,14 @@ generateSubWalletsScene.on(message("text"), async (ctx) => {
       { subWallets: { base58EncodedPrivateKeys, base58EncodedPublicKeys } },
       userId
     );
-    await ctx.reply(`${numberOfWallets} sub wallets created.`);
+    await ctx.reply(`👜 ${numberOfWallets} sub wallets created.`);
     for (let i = 0; i < numberOfWallets; i++) {
-      await ctx.reply(
-        `Wallet 1: Address: ${base58EncodedPublicKeys[i]} Private key: ${base58EncodedPrivateKeys[i]}`
+      await ctx.replyWithHTML(
+        `👜 <b>Wallet 1</b>\n\n` +
+        `📫 <b>Address:</b> <code>${base58EncodedPublicKeys[i]}</code>\n\n` +
+        `🔑 <b>Private Key:</b> <code>${base58EncodedPrivateKeys[i]}</code>`
       );
+      
     }
     ctx.scene.enter(ScenesEnum.MAIN_SCENE);
   }
