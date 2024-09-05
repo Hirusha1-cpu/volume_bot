@@ -229,41 +229,50 @@ mainScene.action(MainFunctionsEnum.STOP, async (ctx) => {
   console.log("Here");
 });
 
+let loopInterval: any;
+
+mainScene.command('stop', async (ctx) => {
+  isStopped = true;
+  if (loopInterval) {
+    clearInterval(loopInterval);
+  }
+  ctx.reply("🛑 Loop stopped by user.");
+  console.log("stop clicked");
+});
 
 mainScene.command('test', async (ctx) => {
   isStopped = false;
   ctx.reply("🔄 Loop started. Use /stop to end the loop early.");
 
-  // Set a timer to stop the loop after 1 minute (60,000 milliseconds)
+  // Set a timer to stop the loop after 1 minute
   setTimeout(() => {
     isStopped = true;
+    if (loopInterval) {
+      clearInterval(loopInterval);
+    }
     ctx.reply("⏰ 1 minute is up! The loop has been automatically stopped.");
-  }, 60000); // 1 minute = 60,000 milliseconds
+  }, 60000);
 
-  try {
-    while (!isStopped) {
-      // Check if the loop is stopped before doing any work
-      console.log("stop clicked -1");
-      if (isStopped) break;
-      console.log("stop clicked -2");
-      
-      await ctx.reply("🔁 Running loop...");
-      
-      console.log("stop clicked -3");
-      // Delay to control loop frequency
-      await new Promise((resolve) => setTimeout(resolve, 5000)); // 5 seconds delay
-      console.log("stop clicked -4");
+  // Use setInterval instead of while loop
+  loopInterval = setInterval(async () => {
+    if (isStopped) {
+      clearInterval(loopInterval);
+      ctx.reply("✅ Loop has been stopped.");
+      return;
     }
 
-    ctx.reply("✅ Loop has been stopped.");
-  } catch (error: any) {
-    console.log("Loop interrupted:", error.message);
-  }
+    console.log("Loop iteration");
+    await ctx.reply("🔁 Running loop...");
+  }, 5000);
 });
 
-mainScene.command('stop', async (ctx) => {
-  isStopped = true;
-  ctx.reply("🛑 Loop stopped by user.");
-  console.log("stop clicked");
-  
-});
+// Add this to your mainScene
+
+// mainScene.action(MainFunctionsEnum.STOP, async (ctx) => {
+//   isStopped = true;
+//   if (volumeGenerationInterval) {
+//     clearInterval(volumeGenerationInterval);
+//   }
+//   ctx.reply("🛑 Volume generation stopped by user.");
+//   console.log("Stop clicked in main scene");
+// });

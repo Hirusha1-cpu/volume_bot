@@ -88,10 +88,10 @@ export async function setConfig(data: any, userId: number) {
     // Define default configuration
     const defaultConfig = {
       token: "defaultToken",
-      minSwapAmount: 0.001,
-      maxSwapAmount: 0.005,
+      minSwapAmount: 0.00001,
+      maxSwapAmount: 0.00005,
       minSwapDelay: 10,
-      maxSwapDelay: 20,
+      maxSwapDelay: 12,
       priorityFee: 0.001,
       maintenanceBalance: 0.001,
       subWallets: data?.subWallets || { base58EncodedPrivateKeys: [], base58EncodedPublicKeys: [] } 
