@@ -10,9 +10,9 @@ export const authScene = new Scenes.BaseScene<WalletBotContext>(
 );
 authScene.enter(async (ctx) => {
   const userId = ctx?.from?.id as number;
-  if (await getExpiry(userId)) {
-    ctx.reply("Expired");
-  } else {
+  // if (await getExpiry(userId)) {
+  //   ctx.reply("Expired");
+  // } else {
     ctx.scene.enter(ScenesEnum.GENERATE_MAIN_WALLET_SCENE);
-  }
+  // }
 });

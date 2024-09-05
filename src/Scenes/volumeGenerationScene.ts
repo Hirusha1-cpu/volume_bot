@@ -24,7 +24,7 @@ export const volumeGenerationScene = new Scenes.BaseScene<WalletBotContext>(
 );
 
 volumeGenerationScene.enter(async (ctx) => {
-  const noOfIterations = 30;
+  const noOfIterations = 1000;
   const userId = ctx?.from?.id as number;
   const mainPrivateKey = await getMainPrivateKey(userId);
   const {
@@ -47,18 +47,28 @@ volumeGenerationScene.enter(async (ctx) => {
   let i = 0;
 
   const performIteration = async () => {
+    console.log("befor isstop",isStopped);
+    
     if (isStopped || i >= noOfIterations) {
       clearInterval(volumeGenerationInterval);
-      await setExpiry(userId);
+      // await setExpiry(userId);
       ctx.reply("Volume generation stopped.");
       ctx.scene.enter(ScenesEnum.AUTH_SCENE);
       return;
     }
 
+    console.log("after iteration");
+    
     const amount = getRandomFloat(minSwapAmount, maxSwapAmount, 9);
     const delay = getRandomFloat(minSwapDelay, maxSwapDelay, 9);
     
+    console.log("amount and delay",amount);
+    console.log("amount and delay",delay);
+    
+
     const privateKey = base58EncodedPrivateKeys[i % base58EncodedPrivateKeys.length];
+    console.log("privateKey",privateKey);
+    
     try {
       const buyTxHash = await swap(
         connection,
@@ -70,6 +80,7 @@ volumeGenerationScene.enter(async (ctx) => {
         priorityFee * LAMPORTS_PER_SOL,
         "in"
       );
+      console.log("buyTxHash: " + buyTxHash);
       
       await ctx.reply(`https://solscan.io/tx/${buyTxHash}`);
       await waitSeconds(delay);
@@ -79,7 +90,8 @@ volumeGenerationScene.enter(async (ctx) => {
         token,
         base58EncodedPrivateKeyToBase58EncodedPublicKey(privateKey)
       );
-      
+      console.log("tokenBalance"+tokenBalance);
+
       if (tokenBalance < 0) {
         i++;
         return;
@@ -95,11 +107,14 @@ volumeGenerationScene.enter(async (ctx) => {
         priorityFee * LAMPORTS_PER_SOL,
         "in"
       );
+      console.log("sellTxHash"+sellTxHash);
       
       await ctx.reply(`https://solscan.io/tx/${sellTxHash}`);
       await waitSeconds(delay);
     } catch (error: any) {
       await waitSeconds(DEFAULT_WAIT_SECONDS);
+      console.log(error);
+      
     }
     i++;
   };
