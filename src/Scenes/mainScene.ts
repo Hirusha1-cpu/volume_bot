@@ -199,6 +199,7 @@ mainScene.action(MainFunctionsEnum.REFRESH, async (ctx) => {
   // Get the user's wallet configuration
   const {
     wallets: { publicKey, privateKey },
+    token,
   } = await getConfig(userId);
 
   // Loop through each wallet and get the balance
@@ -212,7 +213,8 @@ mainScene.action(MainFunctionsEnum.REFRESH, async (ctx) => {
       await ctx.replyWithHTML(
         `👜 <b>Deposit Wallet Address:</b> ➡️<code>${publicKey}</code>\n\n` +
         `🔑 <b>Deposit Private Key:</b> ➡️<code>${privateKey}</code>\n\n` +
-        `💰 <b>Balance:</b> ${balance} SOL\n`
+        `🪪 <b>Deposit Token:</b> ➡️<code>${token || "Not setted token"}</code>\n\n` +
+        `💰 <b>Balance:</b> ${balance || 0} SOL\n`
       );
     } catch (error: any) {
       await ctx.reply(`❗ Error getting balance of ${publicKey}`);
