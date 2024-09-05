@@ -87,7 +87,7 @@ export async function setConfig(data: any, userId: number) {
   try {
     // Define default configuration
     const defaultConfig = {
-      token: "defaultToken",
+      // token: "defaultToken",
       minSwapAmount: 0.00001,
       maxSwapAmount: 0.00005,
       minSwapDelay: 10,
@@ -99,7 +99,7 @@ export async function setConfig(data: any, userId: number) {
     };
 
     // Check if all required fields are present in `data`
-    const requiredFields = ['token', 'minSwapAmount', 'maxSwapAmount', 'minSwapDelay', 'maxSwapDelay', 'priorityFee', 'maintenanceBalance'];
+    const requiredFields = ['minSwapAmount', 'maxSwapAmount', 'minSwapDelay', 'maxSwapDelay', 'priorityFee', 'maintenanceBalance'];
     const isDataValid = requiredFields.every(field => data && data[field] !== undefined);
 
     if (isDataValid) {
