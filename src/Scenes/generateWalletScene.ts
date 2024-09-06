@@ -62,8 +62,8 @@ generateMainWalletScene.start((ctx) => {
 });
 
 generateMainWalletScene.enter(async (ctx) => {
-  //check the user already have a wallet, if not create one. If yes ask whether they want to create one. Ideally this should be getting from a DB.
   const userId = ctx?.from?.id as number;
+  //check the user already have a wallet, if not create one. If yes ask whether they want to create one. Ideally this should be getting from a DB.
   const userHaveWallet = await getDoesUserHaveMainWallet(userId);
   if (userHaveWallet) {
     const menuOptions = Markup.inlineKeyboard([

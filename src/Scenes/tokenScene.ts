@@ -1,7 +1,7 @@
 import { message } from "telegraf/filters";
 import { Markup, Scenes } from "telegraf";
 import { ScenesEnum, CommonEnum, ContactUsEnum } from "../const";
-import { setConfig, getTokenAddressOfUser } from "../db";
+import { setConfig, getTokenAddressOfUser, getConfig } from "../db";
 import { WalletBotContext } from "../Interfaces";
 
 // config scene
@@ -28,9 +28,20 @@ tokenScene.on(message("text"), async (ctx) => {
 
     if (existingToken !== null) {
       await ctx.reply("This token has already been registered.");
+      // await setConfig({ token }, userId);
+      // await ctx.reply(`Set token to ${token}.`);
+      // ctx.scene.enter(ScenesEnum.CONFIG_SCENE);
+
       await setConfig({ token }, userId);
-      await ctx.reply(`Set token to ${token}.`);
-      ctx.scene.enter(ScenesEnum.CONFIG_SCENE);
+      await ctx.reply(`Token address set to ${token}.`);
+      const config = await getConfig(userId);
+      if (config.minSwapAmount != null) {
+        
+        ctx.scene.enter(ScenesEnum.GENERATE_MAIN_WALLET_SCENE);
+      }else{
+        ctx.scene.enter(ScenesEnum.CONFIG_SCENE);
+      }
+      
     } else {
       await ctx.reply("This token has not been registered. Please contact us.");
 
