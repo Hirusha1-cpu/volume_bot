@@ -10,7 +10,7 @@ export const rpcUrlScene = new Scenes.BaseScene<WalletBotContext>(
 );
 
 rpcUrlScene.enter(async (ctx) => {
-  ctx.reply("Set RPC Url");
+  ctx.reply("🔗 Set the RPC Url");
 });
 
 rpcUrlScene.on(message("text"), async (ctx) => {
@@ -27,7 +27,7 @@ rpcUrlScene.on(message("text"), async (ctx) => {
       ctx.scene.enter(ScenesEnum.CONFIG_SCENE);
     } else {
       await setConfig({ rpcUrl }, userId);
-      await ctx.reply(`Setted RPC Url to ${rpcUrl}.`);
+      await ctx.reply(`🔗 Setted RPC Url to \n\n ➡️ ${rpcUrl}.`);
       ctx.scene.enter(ScenesEnum.CONFIG_SCENE);
     }
   }
@@ -39,7 +39,7 @@ rpcUrlScene.action(DefaultEnum.SET_DEFAULT, async (ctx) => {
 
   // Set the default minSwapDelay value
   await setConfig({ rpcUrl:rpcUrl }, userId);
-  await ctx.reply(`Set minimum swap amount to the default value of ${rpcUrl}.`);
+  await ctx.reply(`Set rpc URL to the default value of ${rpcUrl}.`);
 
   // Proceed to the next scene
   ctx.scene.enter(ScenesEnum.SET_MIN_DELAY_SCENE);

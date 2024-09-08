@@ -68,7 +68,7 @@ export enum ConfigFunctionsEnum {
   SET_DELAY = "⏳ Set Delay",
   SET_PRIORITY_FEE = "💵 Set Priority Fee",
   SET_MIN_MAINTENANCE_BALANCE = "💰 Set Minimum Maintenance Balance",
-  SET_RPC_URL = "Set RPC URL",
+  SET_RPC_URL = "🪫 Set RPC URL",
 }
 export enum ContactUsEnum {
   SET_TOKEN = "📜 Set Token",
