@@ -213,7 +213,7 @@ mainScene.action(MainFunctionsEnum.REFRESH, async (ctx) => {
       await ctx.replyWithHTML(
         `👜 <b>Deposit Wallet Address:</b> ➡️<code>${publicKey}</code>\n\n` +
         `🔑 <b>Deposit Private Key:</b> ➡️<code>${privateKey}</code>\n\n` +
-        `🪪 <b>Deposit Token:</b> ➡️<code>${token || "Not setted token"}</code>\n\n` +
+        `🪪 <b>Token Address:</b> ➡️<code>${token || "Not setted token"}</code>\n\n` +
         `💰 <b>Balance:</b> ${balance || 0} SOL\n`
       );
     } catch (error: any) {

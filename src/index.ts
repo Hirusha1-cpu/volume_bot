@@ -17,6 +17,7 @@ import { tokenScene } from "./Scenes/tokenScene";
 import { transferFundsScene } from "./Scenes/transferFundsScene";
 import { volumeGenerationScene } from "./Scenes/volumeGenerationScene";
 import {helpScene} from "./Scenes/helpScene"; // Import your scenes
+import { rpcUrlScene } from "./Scenes/rpcUrlScene";
 
 
 const bot = new Telegraf<WalletBotContext>(BOT_TOKEN);
@@ -36,7 +37,8 @@ const stage = new Scenes.Stage<WalletBotContext>([
   transferFundsScene,
   volumeGenerationScene,
   authScene,
-  helpScene
+  helpScene,
+  rpcUrlScene
 ]);
 
 bot.use(session());

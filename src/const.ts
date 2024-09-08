@@ -31,7 +31,8 @@ export enum ScenesEnum {
   SUB_WALLET_GENERSTION_SCENE = "SUB_WALLET_GENERSTION_SCENE",
   TRANSFER_FUNDS_SCENE = "TRANSFER_FUNDS_SCENE",
   VOLUME_GENERATION_PROGRESS = "VOLUME_GENERATION_PROGRESS",
-  HELP_SCENE = "HELP_SCENE"
+  HELP_SCENE = "HELP_SCENE",
+  SET_RPC_URL_SCENE = "SET_RPC_URL_SCENE",
 }
 
 export enum CommandEnum {
@@ -67,6 +68,7 @@ export enum ConfigFunctionsEnum {
   SET_DELAY = "⏳ Set Delay",
   SET_PRIORITY_FEE = "💵 Set Priority Fee",
   SET_MIN_MAINTENANCE_BALANCE = "💰 Set Minimum Maintenance Balance",
+  SET_RPC_URL = "Set RPC URL",
 }
 export enum ContactUsEnum {
   SET_TOKEN = "📜 Set Token",

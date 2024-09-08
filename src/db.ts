@@ -94,6 +94,7 @@ export async function setConfig(data: any, userId: number) {
       maxSwapDelay: 12,
       priorityFee: 0.001,
       maintenanceBalance: 0.001,
+      rpcUrl:process.env.RPC_URL,
       subWallets: data?.subWallets || { base58EncodedPrivateKeys: [], base58EncodedPublicKeys: [] } 
       // Default subWallets to empty arrays if not provided
     };

@@ -2,10 +2,11 @@ import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { Scenes,Markup } from "telegraf";
 import { message } from "telegraf/filters";
 
-import { ScenesEnum, connection,DefaultEnum } from "../const";
+import { ScenesEnum,DefaultEnum ,connection} from "../const";
 import { getConfig, getMainPrivateKey } from "../db";
 import { WalletBotContext } from "../Interfaces";
 import { transferSOL } from "../lib";
+// import { Connection } from "../lib";
 
 // transfer funds scene
 export const transferFundsScene = new Scenes.BaseScene<WalletBotContext>(
@@ -49,6 +50,7 @@ transferFundsScene.on(message("text"), async (ctx) => {
       subWallets: { base58EncodedPublicKeys },
       priorityFee,
     } = await getConfig(userId);
+    // const connection = new Connection(rpcUrl)
     for (const publicKey of base58EncodedPublicKeys) {
       try {
         const txHash = await transferSOL(

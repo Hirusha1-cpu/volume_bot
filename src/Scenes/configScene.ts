@@ -17,6 +17,12 @@ configScene.enter(async (ctx) => {
     ],
     [
       Markup.button.callback(
+        ConfigFunctionsEnum.SET_RPC_URL,
+        ConfigFunctionsEnum.SET_RPC_URL
+      ),
+    ],
+    [
+      Markup.button.callback(
         ConfigFunctionsEnum.SET_SWAP_AMOUNT,
         ConfigFunctionsEnum.SET_SWAP_AMOUNT
       ),
@@ -64,6 +70,15 @@ configScene.action(
     ctx.scene.enter(ScenesEnum.SET_MAINTENANCE_BALANCE_SCENE);
   }
 );
+configScene.action(
+  ConfigFunctionsEnum.SET_RPC_URL,
+  async (ctx) => {
+    ctx.scene.enter(ScenesEnum.SET_RPC_URL_SCENE);
+
+  }
+);
+
+
 
 configScene.action(CommonEnum.BACK, async (ctx) => {
   ctx.scene.enter(ScenesEnum.MAIN_SCENE);
