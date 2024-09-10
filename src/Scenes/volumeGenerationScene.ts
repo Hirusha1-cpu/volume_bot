@@ -4,6 +4,8 @@ import { Scenes } from "telegraf";
 import { ScenesEnum, connection, MainFunctionsEnum } from "../const";
 import { getConfig, getMainPrivateKey, setExpiry } from "../db";
 import { WalletBotContext } from "../Interfaces";
+import { Markup } from 'telegraf';
+import { InlineKeyboardButton } from 'telegraf/typings/core/types/typegram';
 import {
   SOL_ADDRESS,
   fetchPoolKeys,
@@ -24,6 +26,11 @@ export const volumeGenerationScene = new Scenes.BaseScene<WalletBotContext>(
 );
 
 volumeGenerationScene.enter(async (ctx) => {
+  const stopButton: InlineKeyboardButton.CallbackButton = Markup.button.callback('🛑 Stop Generation', 'stop_generation');
+  const keyboard = Markup.inlineKeyboard([stopButton]);
+
+  ctx.reply("Volume generation starting... Click the button below to stop the process.", keyboard);
+
   const noOfIterations = 1000;
   const userId = ctx?.from?.id as number;
   const mainPrivateKey = await getMainPrivateKey(userId);
@@ -82,7 +89,16 @@ volumeGenerationScene.enter(async (ctx) => {
       );
       console.log("buyTxHash: " + buyTxHash);
       
-      await ctx.reply(`https://solscan.io/tx/${buyTxHash}`);
+      // await ctx.reply(`https://solscan.io/tx/${buyTxHash}`);
+      await ctx.reply(
+        `✅ Buy Transaction Successful\n\n` +
+        `🔗 <a href="https://solscan.io/tx/${buyTxHash}">View on Solscan</a>`,
+        {
+          parse_mode: 'HTML',
+          disable_web_page_preview: true, // Type assertion will bypass this check
+          reply_markup: keyboard.reply_markup
+        } as any // Type assertion here
+      );
       await waitSeconds(delay);
       
       const tokenBalance = await getTokenBalance(
@@ -109,17 +125,35 @@ volumeGenerationScene.enter(async (ctx) => {
       );
       console.log("sellTxHash"+sellTxHash);
       
-      await ctx.reply(`https://solscan.io/tx/${sellTxHash}`);
+      // await ctx.reply(`https://solscan.io/tx/${sellTxHash}`);
+      await ctx.replyWithHTML(
+        `✅ Sell Transaction Successful\n\n` +
+        `🔗 <a href="https://solscan.io/tx/${sellTxHash}">View on Solscan</a>`,
+        {
+          parse_mode: 'HTML',
+          disable_web_page_preview: true,
+          reply_markup: keyboard.reply_markup
+        }  as any
+      );
       await waitSeconds(delay);
     } catch (error: any) {
       await waitSeconds(DEFAULT_WAIT_SECONDS);
       console.log(error);
-      
     }
     i++;
   };
 
   volumeGenerationInterval = setInterval(performIteration, 1000); // Adjust interval as needed
+});
+
+volumeGenerationScene.action('stop_generation', async (ctx) => {
+  isStopped = true;
+  if (volumeGenerationInterval) {
+    clearInterval(volumeGenerationInterval);
+  }
+  await ctx.answerCbQuery('Volume generation stopped');
+  await ctx.editMessageText("🛑 Volume generation stopped by user.");
+  ctx.scene.enter(ScenesEnum.AUTH_SCENE);
 });
 
 volumeGenerationScene.command('stop', async (ctx) => {
