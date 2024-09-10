@@ -153,7 +153,7 @@ volumeGenerationScene.action('stop_generation', async (ctx) => {
   }
   await ctx.answerCbQuery('Volume generation stopped');
   await ctx.editMessageText("🛑 Volume generation stopped by user.");
-  ctx.scene.enter(ScenesEnum.AUTH_SCENE);
+  // ctx.scene.enter(ScenesEnum.AUTH_SCENE);
 });
 
 volumeGenerationScene.command('stop', async (ctx) => {
