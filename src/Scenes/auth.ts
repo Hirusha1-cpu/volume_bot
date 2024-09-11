@@ -21,10 +21,10 @@ authScene.enter(async (ctx) => {
   ctx.reply("👋 Welcome to the Solana Telegram Bot!");
   const userId = ctx?.from?.id as number;
   const config = await getConfig(userId);
-  if (!config || !config.token) {
-    
+  if (!config || !config.token ) {
     ctx.scene.enter(ScenesEnum.SET_TOKEN_SCENE);
-  }else{
+  }
+  else{
     ctx.scene.enter(ScenesEnum.GENERATE_MAIN_WALLET_SCENE);
   }
 });

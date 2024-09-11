@@ -13,6 +13,10 @@ export const configScene = new Scenes.BaseScene<WalletBotContext>(
   ScenesEnum.CONFIG_SCENE
 );
 
+tokenScene.start((ctx) => {
+  ctx.scene.enter(ScenesEnum.MAIN_SCENE);
+});
+
 tokenScene.enter(async (ctx) => {
   ctx.reply(
     "Please enter your token address. (Make sure this is a token address and there is an AMM pool for token/SOL in Raydium.)"

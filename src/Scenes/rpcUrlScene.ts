@@ -42,7 +42,7 @@ rpcUrlScene.action(DefaultEnum.SET_DEFAULT, async (ctx) => {
   await ctx.reply(`Set rpc URL to the default value of ${rpcUrl}.`);
 
   // Proceed to the next scene
-  ctx.scene.enter(ScenesEnum.SET_MIN_DELAY_SCENE);
+  ctx.scene.enter(ScenesEnum.CONFIG_SCENE);
 });
 
 rpcUrlScene.action(DefaultEnum.SET_VALUE, async (ctx) => {
