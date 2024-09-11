@@ -18,6 +18,7 @@ import { transferFundsScene } from "./Scenes/transferFundsScene";
 import { volumeGenerationScene } from "./Scenes/volumeGenerationScene";
 import {helpScene} from "./Scenes/helpScene"; // Import your scenes
 import { rpcUrlScene } from "./Scenes/rpcUrlScene";
+import { getConfig } from "./db";
 
 
 const bot = new Telegraf<WalletBotContext>(BOT_TOKEN);
@@ -53,7 +54,13 @@ bot.use(async (ctx, next) => {
 
 bot
   .start(async (ctx) => {
-    ctx.scene.enter(ScenesEnum.AUTH_SCENE);
+    // ctx.reply("👋 Welcome to the Solana Telegram Bot!");
+    // const userId = ctx?.from?.id as number;
+    // const config = await getConfig(userId);
+    // await ctx.scene.enter(ScenesEnum.MAIN_SCENE);
+    // setTimeout(() => {
+      ctx.scene.enter(ScenesEnum.AUTH_SCENE);
+    // }, 100); // 100ms delay, adjust as needed
   })
   .catch((err) => logger.error(err as string));
 
